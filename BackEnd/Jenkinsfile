@@ -32,8 +32,8 @@ pipeline{
         stage("kubernates part"){
             steps{
 
-               bat 'kubectl --kubeconfig="C:\\Users\\theja\\.kube\\config" apply -f deployment.yaml'
-               bat 'kubectl --kubeconfig="C:\\Users\\theja\\.kube\\config" apply -f service.yaml'
+               bat 'kubectl --kubeconfig="C:\\Users\\theja\\.kube\\config" apply -f ./BackEnd/deployment.yaml'
+               bat 'kubectl --kubeconfig="C:\\Users\\theja\\.kube\\config" apply -f ./BackEnd/service.yaml'
 
                echo "applied"
                echo "success-successful"
