@@ -1,0 +1,57 @@
+pipeline{
+
+    agent any
+
+    stages{
+
+        stage("docker build"){
+            steps {
+                bat "call docker build -t coursecart-backend ."
+                echo "build successful"
+            }
+        }
+        stage("Tag Image") {
+            steps {
+                bat "call docker tag coursekart-backend %DOCKER_CREDS_USR%/coursekart:init"
+                echo "image tagged"
+            }
+        }
+
+        stage("docker push"){
+            steps{
+               bat 'docker login -u %DOCKER_CREDS_USR% -p %DOCKER_CREDS_PSW%'
+               bat 'docker push %DOCKER_CREDS_USR%/coursekart:init'
+               echo "pushing completed"
+
+            }
+        }
+        stage("kubernates part"){
+            steps{
+
+               bat 'kubectl --kubeconfig="C:\\Users\\theja\\.kube\\config" apply -f deployment.yaml'
+               bat 'kubectl --kubeconfig="C:\\Users\\theja\\.kube\\config" apply -f service.yaml'
+
+               echo "applied"
+               echo "success-successful"
+               echo "triggered action done"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "CI/CD pipeline completed successfully"
+        }
+
+        failure {
+            echo "Pipeline failed"
+        }
+
+        always {
+            echo "Pipeline execution completed"
+        }
+    }
+
+        }
+    }
+}

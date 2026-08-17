@@ -18,10 +18,4 @@ app.use("/user",userRouter)
 app.use("/admin",adminRouter)
 
 
-
-
-
-
-
-
 app.listen(3000)
