@@ -2,6 +2,10 @@ pipeline{
 
     agent any
 
+    environment{
+        DOCKER_CREDS = credentials('docker-pat')
+    }
+
     stages{
 
         stage("docker build"){
